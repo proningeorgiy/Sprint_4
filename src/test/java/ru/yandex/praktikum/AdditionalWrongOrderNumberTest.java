@@ -1,23 +1,31 @@
 package ru.yandex.praktikum;
 
+import org.junit.After;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
 
 public class AdditionalWrongOrderNumberTest {
+    InitBrowser testBrowser;
+
+    public AdditionalWrongOrderNumberTest() {
+        testBrowser = new InitBrowser();
+    }
+
     @Test
-    public void wrongOrderNumberTest()  throws Exception {
-        InitBrowser TestBrowser = new InitBrowser();
+    public void wrongOrderNumberTest() throws Exception {
+        AdditionalWrongOrderNumber testAdditionalWrongOrderNumber = new AdditionalWrongOrderNumber(testBrowser.getDriver());
+        testAdditionalWrongOrderNumber.clickButtonOrderStatus();
+        testAdditionalWrongOrderNumber.setOrderNumber("12345");
+        testAdditionalWrongOrderNumber.clickButtonGo();
 
-        AdditionalWrongOrderNumber TestAdditionalWrongOrderNumber = new AdditionalWrongOrderNumber(TestBrowser.getDriver());
-        TestAdditionalWrongOrderNumber.clickButtonOrderStatus();
-        TestAdditionalWrongOrderNumber.setOrderNumber("12345");
-        TestAdditionalWrongOrderNumber.clickButtonGo();
+        assertEquals(true, testAdditionalWrongOrderNumber.isOrderNotFound());
 
-        assertEquals(true, TestAdditionalWrongOrderNumber.isOrderNotFound());
+        //Thread.sleep(2_000);
+    }
 
-        Thread.sleep(2_000);
-
-        TestBrowser.getDriver().quit();
+    @After
+    public void CloseBrowser() {
+        testBrowser.getDriver().quit();
     }
 }

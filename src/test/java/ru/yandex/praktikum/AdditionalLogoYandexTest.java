@@ -1,23 +1,32 @@
 package ru.yandex.praktikum;
 
+import org.junit.After;
 import org.junit.Test;
+
 import static org.junit.Assert.assertEquals;
 
 public class AdditionalLogoYandexTest {
+    InitBrowser testBrowser;
+
+    public AdditionalLogoYandexTest() {
+        testBrowser = new InitBrowser();
+    }
+
     @Test
-    public void logoYandexTest()  throws Exception {
-        InitBrowser TestBrowser = new InitBrowser();
+    public void logoYandexTest() throws Exception {
+        AdditionalLogoYandex testAdditionalLogoYandex = new AdditionalLogoYandex(testBrowser.getDriver());
+        testAdditionalLogoYandex.clickLogoYandex();
 
-        AdditionalLogoYandex TestAdditionalLogoYandex = new AdditionalLogoYandex(TestBrowser.getDriver());
-        TestAdditionalLogoYandex.clickLogoYandex();
+        Object[] windowHandles = testBrowser.getDriver().getWindowHandles().toArray();
+        testBrowser.getDriver().switchTo().window((String) windowHandles[1]);
 
-        Object[] windowHandles=TestBrowser.getDriver().getWindowHandles().toArray();
-        TestBrowser.getDriver().switchTo().window((String) windowHandles[1]);
+        assertEquals("Дзен", testAdditionalLogoYandex.getPageTitle("Дзен"));
 
-        assertEquals("Дзен", TestAdditionalLogoYandex.getPageTitle("Дзен"));
+        //Thread.sleep(2_000);
+    }
 
-        Thread.sleep(2_000);
-
-        TestBrowser.getDriver().quit();
+    @After
+    public void CloseBrowser() {
+        testBrowser.getDriver().quit();
     }
 }

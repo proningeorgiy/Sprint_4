@@ -1,22 +1,29 @@
 package ru.yandex.praktikum;
 
+import org.junit.After;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
 
 public class AdditionalLogoScooterTest {
+    InitBrowser testBrowser;
+
+    public AdditionalLogoScooterTest() {
+        testBrowser = new InitBrowser();
+    }
+
     @Test
-    public void logoScooterTest()  throws Exception {
-        InitBrowser TestBrowser = new InitBrowser();
+    public void logoScooterTest() throws Exception {
 
-        AdditionalLogoScooter TestAdditionalLogoScooter = new AdditionalLogoScooter(TestBrowser.getDriver());
-        TestAdditionalLogoScooter.clickTopButtonOrder();
-        TestAdditionalLogoScooter.clickLogoScooter();
+        AdditionalLogoScooter testAdditionalLogoScooter = new AdditionalLogoScooter(testBrowser.getDriver());
+        testAdditionalLogoScooter.clickTopButtonOrder();
+        testAdditionalLogoScooter.clickLogoScooter();
 
-        assertEquals(true, TestAdditionalLogoScooter.isMainPageHeader());
+        assertEquals(true, testAdditionalLogoScooter.isMainPageHeader());
+    }
 
-        Thread.sleep(2_000);
-
-        TestBrowser.getDriver().quit();
+    @After
+    public void CloseBrowser() {
+        testBrowser.getDriver().quit();
     }
 }

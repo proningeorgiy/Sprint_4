@@ -19,11 +19,12 @@ public class AdditionalLogoYandex {
     }
 
     //Клик по логотипу Яндекс
-    public void clickLogoYandex(){
+    public void clickLogoYandex() {
         driver.findElement(logoYandex).click();
     }
+
     //Получение названия страницы
-    public String getPageTitle(String PageTitle){
+    public String getPageTitle(String PageTitle) {
         new WebDriverWait(driver, Duration.ofSeconds(10)).until(ExpectedConditions.titleIs(PageTitle));
 
         return driver.getTitle();

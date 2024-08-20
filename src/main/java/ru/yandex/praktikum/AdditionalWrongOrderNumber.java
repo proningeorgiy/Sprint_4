@@ -25,23 +25,26 @@ public class AdditionalWrongOrderNumber {
     }
 
     //Клик по кнопке Статус заказа
-    public void clickButtonOrderStatus(){
+    public void clickButtonOrderStatus() {
         driver.findElement(buttonOrderStatus).click();
     }
+
     //Заполнить номер заказа
-    public void setOrderNumber(String orderNumber){
+    public void setOrderNumber(String orderNumber) {
         new WebDriverWait(driver, Duration.ofSeconds(3)).until(ExpectedConditions.visibilityOf(driver.findElement(this.orderNumber)));
 
         driver.findElement(this.orderNumber).sendKeys(orderNumber);
     }
+
     //Клик по кнопке Go!
-    public void clickButtonGo(){
+    public void clickButtonGo() {
         new WebDriverWait(driver, Duration.ofSeconds(10)).until(ExpectedConditions.visibilityOf(driver.findElement(buttonGo)));
 
         driver.findElement(buttonGo).click();
     }
+
     //Наличие элемента с сообщением, что такого заказа нет
-    public boolean isOrderNotFound(){
+    public boolean isOrderNotFound() {
         new WebDriverWait(driver, Duration.ofSeconds(3)).until(ExpectedConditions.visibilityOf(driver.findElement(orderNotFound)));
 
         return driver.findElement(orderNotFound).isDisplayed();

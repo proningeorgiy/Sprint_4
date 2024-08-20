@@ -1,10 +1,9 @@
 package ru.yandex.praktikum;
 
+import org.junit.After;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
-
-import java.util.Objects;
 
 import static org.junit.Assert.assertEquals;
 
@@ -20,9 +19,11 @@ public class OrderTopButtonTest {
     private final String colour;
     private final String comments;
     private final boolean isOrderConfirmMessage;
+    InitBrowser testBrowser;
 
-    public OrderTopButtonTest(String name, String surname, String adressOrder, String metroStation, 
-                              String phone, String dateOrder, String daysOrder, String colour, String comments, boolean isOrderConfirmMessage){
+
+    public OrderTopButtonTest(String name, String surname, String adressOrder, String metroStation,
+                              String phone, String dateOrder, String daysOrder, String colour, String comments, boolean isOrderConfirmMessage) {
         this.name = name;
         this.surname = surname;
         this.adressOrder = adressOrder;
@@ -33,47 +34,35 @@ public class OrderTopButtonTest {
         this.colour = colour;
         this.comments = comments;
         this.isOrderConfirmMessage = isOrderConfirmMessage;
+
+        testBrowser = new InitBrowser();
     }
 
     @Parameterized.Parameters
     public static Object[][] FAQs() {
-        return new Object[][] {
+        return new Object[][]{
                 {"Иван", "Иванов", "Москва", "Преображенская площадь", "89031234567", "1-е сентября 2024", "сутки", "черный жемчуг", "Тестовые комментарии 1", true},
                 {"Сергей", "Петров", "Москва, Красная площадь", "Александровский сад", "89160987654", "30-е августа 2024", "четверо суток", "серая безысходность", "Тестовые комментарии 2", true},
         };
     }
 
     @Test
-    public void topButtonOrderTest()  throws Exception {
-        InitBrowser TestBrowser = new InitBrowser();
+    public void topButtonOrderTest() throws Exception {
+        MainPageObj testMainPageObj = new MainPageObj(testBrowser.getDriver());
+        testMainPageObj.clickTopButtonOrder();
 
-        MainPageObj TestMainPageObj = new MainPageObj(TestBrowser.getDriver());
-        TestMainPageObj.clickTopButtonOrder();
+        OrderPageObj testOrderPageObj = new OrderPageObj(testBrowser.getDriver());
+        testOrderPageObj.setOrderData(name, surname, adressOrder, metroStation, phone, dateOrder, daysOrder, colour, comments);
+        testOrderPageObj.clickButtonOrder();
+        testOrderPageObj.clickButtonYes();
 
-        OrderPageObj TestOrderPageObj = new OrderPageObj(TestBrowser.getDriver());
-        TestOrderPageObj.setName(name);
-        TestOrderPageObj.setSurname(surname);
-        TestOrderPageObj.setAdressOrder(adressOrder);
-        TestOrderPageObj.selectMetroStation(metroStation);
-        TestOrderPageObj.setPhone(phone);
-        TestOrderPageObj.clickButtonNext();
-        TestOrderPageObj.setDateOrder(dateOrder);
-        TestOrderPageObj.selectDaysOrder(daysOrder);
+        assertEquals(isOrderConfirmMessage, testOrderPageObj.isOrderConfirmMessage());
 
-        if(Objects.equals(colour, "черный жемчуг"))
-            TestOrderPageObj.clickColourBlack();
-        else if (Objects.equals(colour, "серая безысходность")) {
-            TestOrderPageObj.clickColourGray();
-        }
+        //Thread.sleep(2_000);
+    }
 
-        TestOrderPageObj.setComments(comments);
-        TestOrderPageObj.clickButtonOrder();
-        TestOrderPageObj.clickButtonYes();
-
-        assertEquals(isOrderConfirmMessage, TestOrderPageObj.isOrderConfirmMessage());
-
-        Thread.sleep(2_000);
-
-        TestBrowser.getDriver().quit();
+    @After
+    public void CloseBrowser() {
+        testBrowser.getDriver().quit();
     }
 }

@@ -19,15 +19,17 @@ public class AdditionalLogoScooter {
     }
 
     //Клик по логотипу Самоката
-    public void clickLogoScooter(){
+    public void clickLogoScooter() {
         driver.findElement(logoScooter).click();
     }
+
     //Клик по верхней кнопке Заказать
-    public void clickTopButtonOrder(){
+    public void clickTopButtonOrder() {
         driver.findElement(buttonTopOrder).click();
     }
+
     //Наличие заголовка основной страницы
-    public boolean isMainPageHeader(){
+    public boolean isMainPageHeader() {
         return driver.findElement(mainPageHeader).isDisplayed();
     }
 }

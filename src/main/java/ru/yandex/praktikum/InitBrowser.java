@@ -10,21 +10,8 @@ import org.openqa.selenium.firefox.FirefoxOptions;
 public class InitBrowser {
     private WebDriver driver;
 
-    //Запуск Chrome
-    public void startChrome(){
-        WebDriverManager.chromedriver().setup();
-        driver = new ChromeDriver();
-    }
-
-    //Запуск FireFox. Дополнительные сведения см. в README.md
-    public void startFireFox(){
-        WebDriverManager.firefoxdriver().setup();
-        var opts = new FirefoxOptions().configureFromEnv();
-        driver = new FirefoxDriver(opts);
-    }
-
     //Выбор браузера и открытие сайта
-    public InitBrowser(){
+    public InitBrowser() {
         if ("firefox".equals(System.getProperty("browser")))
             startFireFox();
         else
@@ -35,23 +22,36 @@ public class InitBrowser {
         closeCookiesMassage();
     }
 
+    //Запуск Chrome
+    public void startChrome() {
+        WebDriverManager.chromedriver().setup();
+        driver = new ChromeDriver();
+    }
+
+    //Запуск FireFox. Дополнительные сведения см. в README.md
+    public void startFireFox() {
+        WebDriverManager.firefoxdriver().setup();
+        var opts = new FirefoxOptions().configureFromEnv();
+        driver = new FirefoxDriver(opts);
+    }
+
     //Открытие браузере
-    public void openBrowser(String url){
+    public void openBrowser(String url) {
         driver.get(url);
     }
 
     //Закрытие сообщения о куки
-    public void closeCookiesMassage(){
+    public void closeCookiesMassage() {
         By cookiesMessage = By.className("App_CookieButton__3cvqF");
         driver.findElement(cookiesMessage).click();
     }
 
-    public WebDriver getDriver(){
+    public WebDriver getDriver() {
         return driver;
     }
 
     //Закрытие браузера
-    public void closeBrowser(){
+    public void closeBrowser() {
         this.driver.quit();
     }
 }

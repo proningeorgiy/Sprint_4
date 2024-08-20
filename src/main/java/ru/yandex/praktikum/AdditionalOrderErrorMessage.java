@@ -29,35 +29,42 @@ public class AdditionalOrderErrorMessage {
     }
 
     //Клик по верхней кнопке Заказать
-    public void clickTopButtonOrder(){
+    public void clickTopButtonOrder() {
         driver.findElement(buttonTopOrder).click();
     }
+
     //Клик по кнопке Далее
-    public void clickButtonNext(){
+    public void clickButtonNext() {
         driver.findElement(buttonNext).click();
     }
+
     //Заполнить Адрес
-    public void setAdressOrder(String adressOrder){
+    public void setAdressOrder(String adressOrder) {
         driver.findElement(this.adressOrder).sendKeys(adressOrder);
     }
+
     //Наличие сообщения об ошибке для поля Имя
-    public boolean isNameError(){
+    public boolean isNameError() {
         return driver.findElement(nameError).isDisplayed();
     }
+
     //Наличие сообщения об ошибке для поля Фамилия
-    public boolean isSurnameError(){
+    public boolean isSurnameError() {
         return driver.findElement(surnameError).isDisplayed();
     }
+
     //Наличие сообщения об ошибке для поля Адрес
-    public boolean isAdressOrderError(){
+    public boolean isAdressOrderError() {
         return driver.findElement(adressOrderError).isDisplayed();
     }
+
     //Наличие сообщения об ошибке для списка со станциями метро
-    public boolean isMetroStationError(){
+    public boolean isMetroStationError() {
         return driver.findElement(metroStationError).isDisplayed();
     }
+
     //Наличие сообщения об ошибке для поля Телефон
-    public boolean isPhoneError(){
+    public boolean isPhoneError() {
         return driver.findElement(phoneError).isDisplayed();
     }
 }

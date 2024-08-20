@@ -1,5 +1,6 @@
 package ru.yandex.praktikum;
 
+import org.junit.After;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
@@ -11,14 +12,18 @@ public class FAQQuestionTest {
     private final String questionID;
     private final String questionText;
 
-    public FAQQuestionTest(String questionID, String questionText){
+    InitBrowser testbrowser;
+
+    public FAQQuestionTest(String questionID, String questionText) {
         this.questionID = questionID;
         this.questionText = questionText;
+
+        testbrowser = new InitBrowser();
     }
 
     @Parameterized.Parameters
     public static Object[][] FAQs() {
-        return new Object[][] {
+        return new Object[][]{
                 {"0", "Сколько это стоит? И как оплатить?"},
                 {"1", "Хочу сразу несколько самокатов! Так можно?"},
                 {"2", "Как рассчитывается время аренды?"},
@@ -31,14 +36,15 @@ public class FAQQuestionTest {
     }
 
     @Test
-    public void questionsTest()  throws Exception {
-        InitBrowser TestBrowser = new InitBrowser();
-
-        MainPageObj testMainPageObj = new MainPageObj(TestBrowser.getDriver(), questionID);
+    public void questionsTest() throws Exception {
+        MainPageObj testMainPageObj = new MainPageObj(testbrowser.getDriver(), questionID);
         testMainPageObj.clickQuestion();
 
         assertEquals(questionText, testMainPageObj.getQuestion());
+    }
 
-        TestBrowser.getDriver().quit();
+    @After
+    public void CloseBrowser() {
+        testbrowser.getDriver().quit();
     }
 }

@@ -1,5 +1,6 @@
 package ru.yandex.praktikum;
 
+import org.junit.After;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
@@ -10,15 +11,18 @@ import static org.junit.Assert.assertEquals;
 public class FAQAnswerTest {
     private final String answerID;
     private final String answerText;
+    InitBrowser testBrowser;
 
-    public FAQAnswerTest(String answerID, String answerText){
+    public FAQAnswerTest(String answerID, String answerText) {
         this.answerID = answerID;
         this.answerText = answerText;
+
+        testBrowser = new InitBrowser();
     }
 
     @Parameterized.Parameters
     public static Object[][] FAQs() {
-        return new Object[][] {
+        return new Object[][]{
                 {"0", "Сутки — 400 рублей. Оплата курьеру — наличными или картой."},
                 {"1", "Пока что у нас так: один заказ — один самокат. Если хотите покататься с друзьями, можете просто сделать несколько заказов — один за другим."},
                 {"2", "Допустим, вы оформляете заказ на 8 мая. Мы привозим самокат 8 мая в течение дня. Отсчёт времени аренды начинается с момента, когда вы оплатите заказ курьеру. Если мы привезли самокат 8 мая в 20:30, суточная аренда закончится 9 мая в 20:30."},
@@ -31,14 +35,15 @@ public class FAQAnswerTest {
     }
 
     @Test
-    public void answersTest()  throws Exception {
-        InitBrowser TestBrowser = new InitBrowser();
-
-        MainPageObj testMainPageObj = new MainPageObj(TestBrowser.getDriver(), answerID);
+    public void answersTest() throws Exception {
+        MainPageObj testMainPageObj = new MainPageObj(testBrowser.getDriver(), answerID);
         testMainPageObj.clickQuestion();
 
         assertEquals(answerText, testMainPageObj.getAnswer());
+    }
 
-        TestBrowser.getDriver().quit();
+    @After
+    public void CloseBrowser() {
+        testBrowser.getDriver().quit();
     }
 }

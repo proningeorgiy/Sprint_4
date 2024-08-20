@@ -1,7 +1,6 @@
 package ru.yandex.praktikum;
 
 import org.openqa.selenium.By;
-import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -25,6 +24,7 @@ public class MainPageObj {
     public MainPageObj(WebDriver driver) {
         this.driver = driver;
     }
+
     //Конструктор класса для FAQ
     public MainPageObj(WebDriver driver, String ID) {
         this.driver = driver;
@@ -36,23 +36,26 @@ public class MainPageObj {
     public String getQuestion() {
         return driver.findElement(question).getText();
     }
+
     //Получение текста ответа
     public String getAnswer() {
         new WebDriverWait(driver, Duration.ofSeconds(3)).until(ExpectedConditions.visibilityOf(driver.findElement(answer)));
 
         return driver.findElement(answer).getText();
     }
+
     //Клик на вопрос
-    public void clickQuestion(){
+    public void clickQuestion() {
         driver.findElement(question).click();
     }
 
     //Клик по верхней кнопке Заказать
-    public void clickTopButtonOrder(){
+    public void clickTopButtonOrder() {
         driver.findElement(buttonTopOrder).click();
     }
+
     //Клик по нижней кнопке Заказать
-    public void clickBottomButtonOrder(){
+    public void clickBottomButtonOrder() {
         driver.findElement(buttonBottomOrder).click();
     }
 }
